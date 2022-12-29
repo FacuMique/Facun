@@ -1,0 +1,60 @@
+{
+	"name": "Pipeline_Notebooks",
+	"properties": {
+		"activities": [
+			{
+				"name": "Pasaje Bronze a Silver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/Prueba Integrador ADF/Pasaje: Bronze a Silver"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Pasaje Silver a SQL",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pasaje Bronze a Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/Prueba Integrador ADF/Pasaje: Silver a SQL"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Prueba Integral"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-12-15T17:59:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

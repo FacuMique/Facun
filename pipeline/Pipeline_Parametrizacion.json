@@ -1,0 +1,415 @@
+{
+	"name": "Pipeline_Parametrizacion",
+	"properties": {
+		"activities": [
+			{
+				"name": "Circuits",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "circuitId",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "circuitId",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "circuitRef",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "circuitRef",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "country",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Csv_files",
+						"type": "DatasetReference",
+						"parameters": {
+							"zone": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder_origen": {
+								"value": "@pipeline().parameters.folder_origen",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.circuits",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet1",
+						"type": "DatasetReference",
+						"parameters": {
+							"zone": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder_destino": {
+								"value": "@pipeline().parameters.folder_destino",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.circuits",
+								"type": "Expression"
+							},
+							"folder_destino_2": {
+								"value": "@pipeline().parameters.folder_destino_c",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Races",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "raceId",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "raceId",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "year",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "round",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "round",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "circuitId",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "circuitId",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "date",
+									"type": "DateTime",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "date",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Csv_files",
+						"type": "DatasetReference",
+						"parameters": {
+							"zone": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder_origen": {
+								"value": "@pipeline().parameters.folder_origen",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.races",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet1",
+						"type": "DatasetReference",
+						"parameters": {
+							"zone": {
+								"value": "@pipeline().parameters.cta_almacenamiento",
+								"type": "Expression"
+							},
+							"folder_destino": {
+								"value": "@pipeline().parameters.folder_destino",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.races",
+								"type": "Expression"
+							},
+							"folder_destino_2": {
+								"value": "@pipeline().parameters.folder_destino_r",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Pasaje_Silver_a_SQL",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Circuits",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Races",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/Parametrizacion/Pasaje: Silver_SQL"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Pas_SQL_Gold_Parquet",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pasaje_Silver_a_SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/Parametrizacion/Pasaje: SQL a Gold_Parquet"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"cta_almacenamiento": {
+				"type": "string",
+				"defaultValue": "Pipeline_Parametrizacion"
+			},
+			"folder_origen": {
+				"type": "string",
+				"defaultValue": "Bronze"
+			},
+			"folder_destino": {
+				"type": "string",
+				"defaultValue": "Silver"
+			},
+			"races": {
+				"type": "string",
+				"defaultValue": "races.csv"
+			},
+			"circuits": {
+				"type": "string",
+				"defaultValue": "circuits.csv"
+			},
+			"folder_destino_r": {
+				"type": "string",
+				"defaultValue": "Races"
+			},
+			"folder_destino_c": {
+				"type": "string",
+				"defaultValue": "Circuits"
+			}
+		},
+		"folder": {
+			"name": "Parametrizacion"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-12-13T16:50:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

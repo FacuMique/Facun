@@ -1,0 +1,12 @@
+{
+	"name": "DB_Formacion",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=formaciondb.database.windows.net;initial catalog=DB_formacion;user id=user",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEJDQkM5ODAyLTkzREUtNEM5MS1BQ0FCLTcwMjZCMzA4NEJENF8wYmEwYzRmMC03NjhlLTQ0NzctYTE3YS0wN2YwMDgwYzMxNGQiDQp9"
+		}
+	}
+}

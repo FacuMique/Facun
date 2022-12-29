@@ -1,0 +1,46 @@
+{
+	"name": "Races",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DB_Formacion",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "raceId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "round",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "circuitId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "race"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,110 @@
+{
+	"name": "Games",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Formacion3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "games.csv",
+				"folderPath": "ADF-NBA/DATASET",
+				"fileSystem": "miquelarena"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "GAME_DATE_EST",
+				"type": "String"
+			},
+			{
+				"name": "GAME_ID",
+				"type": "String"
+			},
+			{
+				"name": "GAME_STATUS_TEXT",
+				"type": "String"
+			},
+			{
+				"name": "HOME_TEAM_ID",
+				"type": "String"
+			},
+			{
+				"name": "VISITOR_TEAM_ID",
+				"type": "String"
+			},
+			{
+				"name": "SEASON",
+				"type": "String"
+			},
+			{
+				"name": "TEAM_ID_home",
+				"type": "String"
+			},
+			{
+				"name": "PTS_home",
+				"type": "String"
+			},
+			{
+				"name": "FG_PCT_home",
+				"type": "String"
+			},
+			{
+				"name": "FT_PCT_home",
+				"type": "String"
+			},
+			{
+				"name": "FG3_PCT_home",
+				"type": "String"
+			},
+			{
+				"name": "AST_home",
+				"type": "String"
+			},
+			{
+				"name": "REB_home",
+				"type": "String"
+			},
+			{
+				"name": "TEAM_ID_away",
+				"type": "String"
+			},
+			{
+				"name": "PTS_away",
+				"type": "String"
+			},
+			{
+				"name": "FG_PCT_away",
+				"type": "String"
+			},
+			{
+				"name": "FT_PCT_away",
+				"type": "String"
+			},
+			{
+				"name": "FG3_PCT_away",
+				"type": "String"
+			},
+			{
+				"name": "AST_away",
+				"type": "String"
+			},
+			{
+				"name": "REB_away",
+				"type": "String"
+			},
+			{
+				"name": "HOME_TEAM_WINS",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

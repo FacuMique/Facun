@@ -1,0 +1,61 @@
+{
+	"name": "Trigger_ADF-NBA",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline_Parametrizacion",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"cta_almacenamiento": "Pipeline_Parametrizacion",
+					"folder_origen": "Bronze",
+					"folder_destino": "Silver",
+					"races": "races.csv",
+					"circuits": "circuits.csv",
+					"folder_destino_r": "Races",
+					"folder_destino_c": "Circuits"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Ejecutar_Pipeline_Parametrizacion",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline_ADF-NBA_Executes",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"cta_almacenamiento": "ADF-NBA",
+					"folder_destino_games": "Gsmes",
+					"folder_destino_teams": "Teams",
+					"folder_destino_ranking": "Ranking",
+					"folder_destino_players": "Players",
+					"folder_destino_games_d": "Games_Details",
+					"Games": "games.csv",
+					"Teams": "teams.csv",
+					"Ranking": "ranking.csv",
+					"Players": "players.csv",
+					"Games_details": "games_details.csv",
+					"folder_origen": "DATASET",
+					"folder_destino": "BRONZE"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 5,
+				"startTime": "2022-12-23T15:00:00",
+				"endTime": "2022-12-28T17:00:00",
+				"timeZone": "Argentina Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,54 @@
+{
+	"name": "Circuits",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DB_Formacion",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "circuitId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "circuitRef",
+				"type": "nvarchar"
+			},
+			{
+				"name": "name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "lat",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "lng",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "alt",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "circuits"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

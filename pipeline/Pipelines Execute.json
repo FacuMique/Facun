@@ -1,0 +1,186 @@
+{
+	"name": "Pipelines Execute",
+	"properties": {
+		"activities": [
+			{
+				"name": "Mail Confirmacion Proceso OK",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Notebooks",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\": \"PIPELINE EJECUTADO CORRECTAMENTE\",\n\"messaje\": \"DEMO PIPELINE EJECUTADO CON EXITO\",\n\"color\": \"GREEN\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Execute Notebooks",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute Ingesta",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Pipeline_Notebooks",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Mail Confirmacion Proceso con Error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Notebooks",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Notebooks').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Execute Ingesta",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Pipeline_Ingestas",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"cta_almacenamiento": {
+							"value": "@pipeline().parameters.cta_almacenamiento",
+							"type": "Expression"
+						},
+						"folder_destino": {
+							"value": "@pipeline().parameters.folder_destino",
+							"type": "Expression"
+						},
+						"races": {
+							"value": "@pipeline().parameters.races",
+							"type": "Expression"
+						},
+						"circuits": {
+							"value": "@pipeline().parameters.circuits",
+							"type": "Expression"
+						},
+						"folder_destino_r": {
+							"value": "@pipeline().parameters.folder_destino_r",
+							"type": "Expression"
+						},
+						"folder_destino_c": {
+							"value": "@pipeline().parameters.folder_destino_c",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Mail Confirmacion Error de Ingesta",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Ingesta",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Ingesta').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"cta_almacenamiento": {
+				"type": "string",
+				"defaultValue": "Pipeline_Parametrizacion"
+			},
+			"folder_origen": {
+				"type": "string",
+				"defaultValue": "Bronze"
+			},
+			"folder_destino": {
+				"type": "string",
+				"defaultValue": "Silver"
+			},
+			"races": {
+				"type": "string",
+				"defaultValue": "races.csv"
+			},
+			"circuits": {
+				"type": "string",
+				"defaultValue": "circuits.csv"
+			},
+			"folder_destino_r": {
+				"type": "string",
+				"defaultValue": "Races"
+			},
+			"folder_destino_c": {
+				"type": "string",
+				"defaultValue": "Circuits"
+			}
+		},
+		"folder": {
+			"name": "Prueba Integral"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-12-15T18:27:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

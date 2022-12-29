@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault_FJM",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://keyvaultfjm.vault.azure.net/"
+		}
+	}
+}

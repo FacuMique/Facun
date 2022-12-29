@@ -1,0 +1,168 @@
+{
+	"name": "Pipelines_Notebooks",
+	"properties": {
+		"activities": [
+			{
+				"name": "Pje de Bronze a Trusted",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/ADF-NBA/Pje Bronze a Trusted"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Caso de Uso 1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pje de Bronze a Trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/ADF-NBA/Caso de Uso 1"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Caso de Uso 2",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pje de Bronze a Trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/ADF-NBA/Caso de Uso 2"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Caso de Uso 3",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pje de Bronze a Trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/ADF-NBA/Caso de Uso 3"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Caso de Uso 4",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pje de Bronze a Trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/ADF-NBA/Caso de Uso 4"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Caso de Uso 5",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Pje de Bronze a Trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Miquelarena/ADF-NBA/Caso de Uso 5"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_formacion",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "ADF-NBA"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-12-28T15:16:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

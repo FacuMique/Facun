@@ -1,0 +1,45 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Formacion3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"zone": {
+				"type": "string"
+			},
+			"folder_destino": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			},
+			"folder_destino_2": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Parametrizacion"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(dataset().zone, '/', dataset().folder_destino, '/', dataset().folder_destino_2)",
+					"type": "Expression"
+				},
+				"fileSystem": "miquelarena"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

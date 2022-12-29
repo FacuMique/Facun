@@ -1,0 +1,9 @@
+{
+	"name": "adf-formacion2",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5febddbb-209f-4509-92b6-cf75b9687418",
+		"tenantId": "3048dc87-43f0-4100-9acb-ae1971c79395"
+	}
+}
