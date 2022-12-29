@@ -1,0 +1,3606 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-formacion2"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_cta_almacenamiento": {
+			"type": "string",
+			"defaultValue": "Pipeline_Parametrizacion"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_origen": {
+			"type": "string",
+			"defaultValue": "Bronze"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino": {
+			"type": "string",
+			"defaultValue": "Silver"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_races": {
+			"type": "string",
+			"defaultValue": "races.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_circuits": {
+			"type": "string",
+			"defaultValue": "circuits.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_r": {
+			"type": "string",
+			"defaultValue": "Races"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_c": {
+			"type": "string",
+			"defaultValue": "Circuits"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_cta_almacenamiento": {
+			"type": "string",
+			"defaultValue": "ADF-NBA"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games": {
+			"type": "string",
+			"defaultValue": "Gsmes"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_teams": {
+			"type": "string",
+			"defaultValue": "Teams"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_ranking": {
+			"type": "string",
+			"defaultValue": "Ranking"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_players": {
+			"type": "string",
+			"defaultValue": "Players"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games_d": {
+			"type": "string",
+			"defaultValue": "Games_Details"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games": {
+			"type": "string",
+			"defaultValue": "games.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Teams": {
+			"type": "string",
+			"defaultValue": "teams.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Ranking": {
+			"type": "string",
+			"defaultValue": "ranking.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Players": {
+			"type": "string",
+			"defaultValue": "players.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games_details": {
+			"type": "string",
+			"defaultValue": "games_details.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_origen": {
+			"type": "string",
+			"defaultValue": "DATASET"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino": {
+			"type": "string",
+			"defaultValue": "BRONZE"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Script_lines')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Formacion3",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Simpson"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "simpsons_script_lines.csv",
+						"folderPath": "Simpsons/Bronze",
+						"fileSystem": "miquelarena"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "episode_id",
+						"type": "String"
+					},
+					{
+						"name": "number",
+						"type": "String"
+					},
+					{
+						"name": "raw_text",
+						"type": "String"
+					},
+					{
+						"name": "timestamp_in_ms",
+						"type": "String"
+					},
+					{
+						"name": "speaking_line",
+						"type": "String"
+					},
+					{
+						"name": "character_id",
+						"type": "String"
+					},
+					{
+						"name": "location_id",
+						"type": "String"
+					},
+					{
+						"name": "raw_character_text",
+						"type": "String"
+					},
+					{
+						"name": "raw_location_text",
+						"type": "String"
+					},
+					{
+						"name": "spoken_words",
+						"type": "String"
+					},
+					{
+						"name": "normalized_text",
+						"type": "String"
+					},
+					{
+						"name": "word_count",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Teams')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Formacion3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "teams.csv",
+						"folderPath": "ADF-NBA/DATASET",
+						"fileSystem": "miquelarena"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "LEAGUE_ID",
+						"type": "String"
+					},
+					{
+						"name": "TEAM_ID",
+						"type": "String"
+					},
+					{
+						"name": "MIN_YEAR",
+						"type": "String"
+					},
+					{
+						"name": "MAX_YEAR",
+						"type": "String"
+					},
+					{
+						"name": "ABBREVIATION",
+						"type": "String"
+					},
+					{
+						"name": "NICKNAME",
+						"type": "String"
+					},
+					{
+						"name": "YEARFOUNDED",
+						"type": "String"
+					},
+					{
+						"name": "CITY",
+						"type": "String"
+					},
+					{
+						"name": "ARENA",
+						"type": "String"
+					},
+					{
+						"name": "ARENACAPACITY",
+						"type": "String"
+					},
+					{
+						"name": "OWNER",
+						"type": "String"
+					},
+					{
+						"name": "GENERALMANAGER",
+						"type": "String"
+					},
+					{
+						"name": "HEADCOACH",
+						"type": "String"
+					},
+					{
+						"name": "DLEAGUEAFFILIATION",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DL to SQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Cars CSV to SQL",
+						"description": "Ingesta Cars CSV",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "DELETE FROM [dbo].[Cars]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CarsCSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CarsTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Cars"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-02T18:04:48Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline_Ingestas')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Circuits",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "circuitId",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "circuitId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "circuitRef",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "circuitRef",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "location",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "location",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "country",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "country",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Circuits",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.circuits",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_c",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Races",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "raceId",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "raceId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "round",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "round",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "circuitId",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "circuitId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "date",
+											"type": "DateTime",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "date",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Races",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.races",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_r",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "Prueba_ADF"
+					},
+					"folder_destino": {
+						"type": "string",
+						"defaultValue": "Bronze"
+					},
+					"races": {
+						"type": "string",
+						"defaultValue": "races"
+					},
+					"circuits": {
+						"type": "string",
+						"defaultValue": "circuits"
+					},
+					"folder_destino_r": {
+						"type": "string",
+						"defaultValue": "Races"
+					},
+					"folder_destino_c": {
+						"type": "string",
+						"defaultValue": "Circuits"
+					}
+				},
+				"folder": {
+					"name": "Prueba Integral"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-15T17:59:54Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline_Ingestas_csv')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Games",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "GAME_DATE_EST",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "GAME_DATE_EST",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "GAME_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "GAME_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "GAME_STATUS_TEXT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "GAME_STATUS_TEXT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "HOME_TEAM_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "HOME_TEAM_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "VISITOR_TEAM_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "VISITOR_TEAM_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SEASON",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SEASON",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_ID_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ID_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PTS_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PTS_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG_PCT_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG_PCT_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FT_PCT_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FT_PCT_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG3_PCT_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG3_PCT_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "AST_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AST_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "REB_home",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "REB_home",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_ID_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ID_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PTS_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PTS_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG_PCT_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG_PCT_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FT_PCT_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FT_PCT_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG3_PCT_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG3_PCT_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "AST_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AST_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "REB_away",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "REB_away",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "HOME_TEAM_WINS",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "HOME_TEAM_WINS",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files_2",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Games",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Csv_files_3",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Games",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_games",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Teams",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "LEAGUE_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LEAGUE_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "MIN_YEAR",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "MIN_YEAR",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "MAX_YEAR",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "MAX_YEAR",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ABBREVIATION",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ABBREVIATION",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "NICKNAME",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "NICKNAME",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "YEARFOUNDED",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "YEARFOUNDED",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CITY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CITY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ARENA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ARENA",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ARENACAPACITY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ARENACAPACITY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "OWNER",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OWNER",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "GENERALMANAGER",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "GENERALMANAGER",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "HEADCOACH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "HEADCOACH",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "DLEAGUEAFFILIATION",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DLEAGUEAFFILIATION",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files_2",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Teams",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Csv_files_3",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Teams",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_teams",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Ranking",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "LEAGUE_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LEAGUE_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SEASON_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SEASON_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "STANDINGSDATE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "STANDINGSDATE",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CONFERENCE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CONFERENCE",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "G",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "G",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "W",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "W",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "L",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "L",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "W_PCT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "W_PCT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "HOME_RECORD",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "HOME_RECORD",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ROAD_RECORD",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ROAD_RECORD",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "RETURNTOPLAY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RETURNTOPLAY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files_2",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Ranking",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Csv_files_3",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Ranking",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_ranking",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Players",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PLAYER_NAME",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PLAYER_NAME",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PLAYER_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PLAYER_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SEASON",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SEASON",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files_2",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Players",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Csv_files_3",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Players",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_players",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Games_Details",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "GAME_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "GAME_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_ABBREVIATION",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_ABBREVIATION",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TEAM_CITY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TEAM_CITY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PLAYER_ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PLAYER_ID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PLAYER_NAME",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PLAYER_NAME",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "NICKNAME",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "NICKNAME",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "START_POSITION",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "START_POSITION",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "COMMENT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "COMMENT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "MIN",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "MIN",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FGM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FGM",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FGA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FGA",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG_PCT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG_PCT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG3M",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG3M",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG3A",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG3A",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FG3_PCT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FG3_PCT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FTM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FTM",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FTA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FTA",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FT_PCT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FT_PCT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "OREB",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OREB",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "DREB",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DREB",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "REB",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "REB",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "AST",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AST",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "STL",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "STL",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "BLK",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "BLK",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "TO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TO",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PF",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PF",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PTS",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PTS",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PLUS_MINUS",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PLUS_MINUS",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files_2",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Games_details",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Csv_files_3",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.Games_details",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_games_d",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "ADF-NBA"
+					},
+					"folder_destino": {
+						"type": "string",
+						"defaultValue": "BRONZE"
+					},
+					"folder_destino_games": {
+						"type": "string",
+						"defaultValue": "Games"
+					},
+					"folder_destino_teams": {
+						"type": "string",
+						"defaultValue": "Teams"
+					},
+					"folder_destino_ranking": {
+						"type": "string",
+						"defaultValue": "Ranking"
+					},
+					"folder_destino_players": {
+						"type": "string",
+						"defaultValue": "Players"
+					},
+					"folder_destino_games_d": {
+						"type": "string",
+						"defaultValue": "Games_Details"
+					},
+					"Games": {
+						"type": "string",
+						"defaultValue": "games.csv"
+					},
+					"Teams": {
+						"type": "string",
+						"defaultValue": "teams.csv"
+					},
+					"Ranking": {
+						"type": "string",
+						"defaultValue": "ranking.csv"
+					},
+					"Players": {
+						"type": "string",
+						"defaultValue": "players.csv"
+					},
+					"Games_details": {
+						"type": "string",
+						"defaultValue": "games_details.csv"
+					},
+					"folder_origen": {
+						"type": "string",
+						"defaultValue": "DATASET"
+					}
+				},
+				"folder": {
+					"name": "ADF-NBA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-21T14:16:03Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline_Parametrizacion')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Circuits",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "circuitId",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "circuitId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "circuitRef",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "circuitRef",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "location",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "location",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "country",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "country",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.circuits",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.circuits",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_c",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Races",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "raceId",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "raceId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "round",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "round",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "circuitId",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "circuitId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "name",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "date",
+											"type": "DateTime",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "date",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Csv_files",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_origen": {
+										"value": "@pipeline().parameters.folder_origen",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.races",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {
+									"zone": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_destino": {
+										"value": "@pipeline().parameters.folder_destino",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@pipeline().parameters.races",
+										"type": "Expression"
+									},
+									"folder_destino_2": {
+										"value": "@pipeline().parameters.folder_destino_r",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Pasaje_Silver_a_SQL",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Circuits",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Races",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Miquelarena/Parametrizacion/Pasaje: Silver_SQL"
+						},
+						"linkedServiceName": {
+							"referenceName": "databricks_formacion",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Pas_SQL_Gold_Parquet",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Pasaje_Silver_a_SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Miquelarena/Parametrizacion/Pasaje: SQL a Gold_Parquet"
+						},
+						"linkedServiceName": {
+							"referenceName": "databricks_formacion",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "Pipeline_Parametrizacion"
+					},
+					"folder_origen": {
+						"type": "string",
+						"defaultValue": "Bronze"
+					},
+					"folder_destino": {
+						"type": "string",
+						"defaultValue": "Silver"
+					},
+					"races": {
+						"type": "string",
+						"defaultValue": "races.csv"
+					},
+					"circuits": {
+						"type": "string",
+						"defaultValue": "circuits.csv"
+					},
+					"folder_destino_r": {
+						"type": "string",
+						"defaultValue": "Races"
+					},
+					"folder_destino_c": {
+						"type": "string",
+						"defaultValue": "Circuits"
+					}
+				},
+				"folder": {
+					"name": "Parametrizacion"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-13T16:50:32Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataflowSimpson')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Simpson"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Characters",
+								"type": "DatasetReference"
+							},
+							"name": "Characters"
+						},
+						{
+							"dataset": {
+								"referenceName": "Episodes",
+								"type": "DatasetReference"
+							},
+							"name": "Episodes"
+						},
+						{
+							"dataset": {
+								"referenceName": "Script_lines",
+								"type": "DatasetReference"
+							},
+							"name": "Script"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "CharactersSalida",
+								"type": "DatasetReference"
+							},
+							"name": "SalidaCharactersCSV"
+						},
+						{
+							"dataset": {
+								"referenceName": "EpisodesScriptSalida",
+								"type": "DatasetReference"
+							},
+							"name": "SalidaEpisodesScript"
+						}
+					],
+					"transformations": [
+						{
+							"name": "BorradoCharacters"
+						},
+						{
+							"name": "BorrarNull"
+						},
+						{
+							"name": "BorradoEpisodes"
+						},
+						{
+							"name": "BorradoScript"
+						},
+						{
+							"name": "EpisodesScript"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          name as string,",
+						"          normalized_name as string,",
+						"          gender as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> Characters",
+						"source(output(",
+						"          id as integer,",
+						"          image_url as string,",
+						"          imdb_rating as string,",
+						"          imdb_votes as string,",
+						"          number_in_season as integer,",
+						"          number_in_series as string,",
+						"          original_air_date as string,",
+						"          original_air_year as string,",
+						"          production_code as string,",
+						"          season as integer,",
+						"          title as string,",
+						"          us_viewers_in_millions as string,",
+						"          video_url as string,",
+						"          views as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> Episodes",
+						"source(output(",
+						"          id as integer,",
+						"          episode_id as integer,",
+						"          number as integer,",
+						"          raw_text as string,",
+						"          timestamp_in_ms as string,",
+						"          speaking_line as string,",
+						"          character_id as integer,",
+						"          location_id as integer,",
+						"          raw_character_text as string,",
+						"          raw_location_text as string,",
+						"          spoken_words as string,",
+						"          normalized_text as string,",
+						"          word_count as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> Script",
+						"Characters select(mapColumn(",
+						"          id,",
+						"          Nombre = normalized_name,",
+						"          Genero = gender",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> BorradoCharacters",
+						"BorradoCharacters filter(Genero!='NULL') ~> BorrarNull",
+						"Episodes select(mapColumn(",
+						"          id,",
+						"          imdb_rating,",
+						"          imdb_votes,",
+						"          number_in_season,",
+						"          number_in_series,",
+						"          original_air_date,",
+						"          original_air_year,",
+						"          production_code,",
+						"          season,",
+						"          title,",
+						"          us_viewers_in_millions,",
+						"          views",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> BorradoEpisodes",
+						"Script select(mapColumn(",
+						"          id,",
+						"          episode_id,",
+						"          number,",
+						"          timestamp_in_ms,",
+						"          speaking_line,",
+						"          character_id,",
+						"          location_id,",
+						"          raw_character_text,",
+						"          raw_location_text,",
+						"          spoken_words,",
+						"          word_count",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> BorradoScript",
+						"BorradoEpisodes, BorradoScript join(BorradoEpisodes@id == episode_id,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> EpisodesScript",
+						"BorrarNull sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> SalidaCharactersCSV",
+						"EpisodesScript sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> SalidaEpisodesScript"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Script_lines')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Transformacion Autos')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Transformacion CARS"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "CarsCSV",
+								"type": "DatasetReference"
+							},
+							"name": "Autos"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "CarsTable",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Make as string,",
+						"          Model as string,",
+						"          Type as string,",
+						"          Origin as string,",
+						"          DriveTrain as string,",
+						"          Length as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> Autos",
+						"Autos derive(Nombre = concat(Type, \" \", Model)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Make as string,",
+						"          Model as string,",
+						"          Type as string,",
+						"          Origin as string,",
+						"          DriveTrain as string,",
+						"          Length as decimal(18,0)",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataflow')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Transformacion Autos",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Autos": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Cars"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-02T18:04:48Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Transformacion Autos')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_Pipeline_Parametrizacion')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Mail Confirmacion Proceso",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipe_Parametrizacion",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CORRECTAMENTE\",\n\"messaje\": \"DEMO PIPELINE EJECUTADO CON EXITO\",\n\"color\": \"GREEN\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Execute Pipe_Parametrizacion",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Pipeline_Parametrizacion",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"cta_almacenamiento": {
+									"value": "@pipeline().parameters.cta_almacenamiento",
+									"type": "Expression"
+								},
+								"folder_origen": {
+									"value": "@pipeline().parameters.folder_origen",
+									"type": "Expression"
+								},
+								"folder_destino": {
+									"value": "@pipeline().parameters.folder_destino",
+									"type": "Expression"
+								},
+								"races": {
+									"value": "@pipeline().parameters.races",
+									"type": "Expression"
+								},
+								"circuits": {
+									"value": "@pipeline().parameters.circuits",
+									"type": "Expression"
+								},
+								"folder_destino_r": {
+									"value": "@pipeline().parameters.folder_destino_r",
+									"type": "Expression"
+								},
+								"folder_destino_c": {
+									"value": "@pipeline().parameters.folder_destino_c",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Mail Confirmacion Error",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipe_Parametrizacion",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Pipe_Parametrizacion').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "Pipeline_Parametrizacion"
+					},
+					"folder_origen": {
+						"type": "string",
+						"defaultValue": "Bronze"
+					},
+					"folder_destino": {
+						"type": "string",
+						"defaultValue": "Silver"
+					},
+					"races": {
+						"type": "string",
+						"defaultValue": "races.csv"
+					},
+					"circuits": {
+						"type": "string",
+						"defaultValue": "circuits.csv"
+					},
+					"folder_destino_r": {
+						"type": "string",
+						"defaultValue": "Races"
+					},
+					"folder_destino_c": {
+						"type": "string",
+						"defaultValue": "Circuits"
+					}
+				},
+				"folder": {
+					"name": "Parametrizacion"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-13T16:51:21Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Pipeline_Parametrizacion')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline_ADF-NBA_Executes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Ingestas CSV",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Pipeline_Ingestas_csv",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"cta_almacenamiento": {
+									"value": "@pipeline().parameters.cta_almacenamiento",
+									"type": "Expression"
+								},
+								"folder_destino": {
+									"value": "@pipeline().parameters.folder_destino",
+									"type": "Expression"
+								},
+								"folder_destino_games": {
+									"value": "@pipeline().parameters.folder_destino_games",
+									"type": "Expression"
+								},
+								"folder_destino_teams": {
+									"value": "@pipeline().parameters.folder_destino_teams",
+									"type": "Expression"
+								},
+								"folder_destino_ranking": {
+									"value": "@pipeline().parameters.folder_destino_ranking",
+									"type": "Expression"
+								},
+								"folder_destino_players": {
+									"value": "@pipeline().parameters.folder_destino_players",
+									"type": "Expression"
+								},
+								"folder_destino_games_d": {
+									"value": "@pipeline().parameters.folder_destino_games_d",
+									"type": "Expression"
+								},
+								"Games": {
+									"value": "@pipeline().parameters.Games",
+									"type": "Expression"
+								},
+								"Teams": {
+									"value": "@pipeline().parameters.Teams",
+									"type": "Expression"
+								},
+								"Ranking": {
+									"value": "@pipeline().parameters.Ranking",
+									"type": "Expression"
+								},
+								"Players": {
+									"value": "@pipeline().parameters.Players",
+									"type": "Expression"
+								},
+								"Games_details": {
+									"value": "@pipeline().parameters.Games_details",
+									"type": "Expression"
+								},
+								"folder_origen": {
+									"value": "@pipeline().parameters.folder_origen",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Mail Confirmacion Error de Ingesta",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Ingestas CSV",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Ingestas CSV').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Execute Notebooks",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute Ingestas CSV",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Pipelines_Notebooks",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Mail Confirmacion Error de Proceso",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Notebooks",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Notebooks').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Mail Confirmacion Proceso OK",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Notebooks",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CORRECTAMENTE\",\n\"messaje\": \"DEMO PIPELINE EJECUTADO CON EXITO\",\n\"color\": \"GREEN\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "ADF-NBA"
+					},
+					"folder_destino_games": {
+						"type": "string",
+						"defaultValue": "Games"
+					},
+					"folder_destino_teams": {
+						"type": "string",
+						"defaultValue": "Teams"
+					},
+					"folder_destino_ranking": {
+						"type": "string",
+						"defaultValue": "Ranking"
+					},
+					"folder_destino_players": {
+						"type": "string",
+						"defaultValue": "Players"
+					},
+					"folder_destino_games_d": {
+						"type": "string",
+						"defaultValue": "Games_Details"
+					},
+					"Games": {
+						"type": "string",
+						"defaultValue": "games.csv"
+					},
+					"Teams": {
+						"type": "string",
+						"defaultValue": "teams.csv"
+					},
+					"Ranking": {
+						"type": "string",
+						"defaultValue": "ranking.csv"
+					},
+					"Players": {
+						"type": "string",
+						"defaultValue": "players.csv"
+					},
+					"Games_details": {
+						"type": "string",
+						"defaultValue": "games_details.csv"
+					},
+					"folder_origen": {
+						"type": "string",
+						"defaultValue": "DATASET"
+					},
+					"folder_destino": {
+						"type": "string",
+						"defaultValue": "BRONZE"
+					}
+				},
+				"folder": {
+					"name": "ADF-NBA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-23T12:30:38Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Pipeline_Ingestas_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipelines Execute')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Mail Confirmacion Proceso OK",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Notebooks",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CORRECTAMENTE\",\n\"messaje\": \"DEMO PIPELINE EJECUTADO CON EXITO\",\n\"color\": \"GREEN\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Execute Notebooks",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute Ingesta",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Pipeline_Notebooks",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Mail Confirmacion Proceso con Error",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Notebooks",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Notebooks').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Execute Ingesta",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Pipeline_Ingestas",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"cta_almacenamiento": {
+									"value": "@pipeline().parameters.cta_almacenamiento",
+									"type": "Expression"
+								},
+								"folder_destino": {
+									"value": "@pipeline().parameters.folder_destino",
+									"type": "Expression"
+								},
+								"races": {
+									"value": "@pipeline().parameters.races",
+									"type": "Expression"
+								},
+								"circuits": {
+									"value": "@pipeline().parameters.circuits",
+									"type": "Expression"
+								},
+								"folder_destino_r": {
+									"value": "@pipeline().parameters.folder_destino_r",
+									"type": "Expression"
+								},
+								"folder_destino_c": {
+									"value": "@pipeline().parameters.folder_destino_c",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Mail Confirmacion Error de Ingesta",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Ingesta",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-21.eastus2.logic.azure.com:443/workflows/b6534bc7e6404ef3ba13b81099875cf3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VXPcNF2pfqkTCnKZO26SbLIb2Lc0MNCBu5_vY2UC5PM",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE EJECUTADO CON ERROR\",\n\"messaje\": \"@{activity('Execute Ingesta').error.message}\",\n\"color\": \"RED\",\n\"datafactoryName\": \"@{pipeline().DataFactory}\",\n\"pipelineName\": \"@{pipeline().Pipeline}\",\n\"pipelineRunId\": \"@{pipeline().RunId}\",\n\"time\": \"@{utcnow()}\",\n\"trigger\":\"@{pipeline().TriggerName}\"\n}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "Pipeline_Parametrizacion"
+					},
+					"folder_origen": {
+						"type": "string",
+						"defaultValue": "Bronze"
+					},
+					"folder_destino": {
+						"type": "string",
+						"defaultValue": "Silver"
+					},
+					"races": {
+						"type": "string",
+						"defaultValue": "races.csv"
+					},
+					"circuits": {
+						"type": "string",
+						"defaultValue": "circuits.csv"
+					},
+					"folder_destino_r": {
+						"type": "string",
+						"defaultValue": "Races"
+					},
+					"folder_destino_c": {
+						"type": "string",
+						"defaultValue": "Circuits"
+					}
+				},
+				"folder": {
+					"name": "Prueba Integral"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-15T18:27:39Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Pipeline_Ingestas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_Simpsons')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataflowSimpson",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataflowSimpson",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Characters": {},
+									"Episodes": {},
+									"Script": {},
+									"SalidaCharactersCSV": {},
+									"SalidaEpisodesScript": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Simpson"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-02T18:04:48Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DataflowSimpson')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Trigger_ADF-NBA')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Pipeline_Parametrizacion",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"cta_almacenamiento": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_cta_almacenamiento')]",
+							"folder_origen": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_origen')]",
+							"folder_destino": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino')]",
+							"races": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_races')]",
+							"circuits": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_circuits')]",
+							"folder_destino_r": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_r')]",
+							"folder_destino_c": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_c')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Ejecutar_Pipeline_Parametrizacion",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Pipeline_ADF-NBA_Executes",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"cta_almacenamiento": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_cta_almacenamiento')]",
+							"folder_destino_games": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games')]",
+							"folder_destino_teams": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_teams')]",
+							"folder_destino_ranking": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_ranking')]",
+							"folder_destino_players": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_players')]",
+							"folder_destino_games_d": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games_d')]",
+							"Games": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games')]",
+							"Teams": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Teams')]",
+							"Ranking": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Ranking')]",
+							"Players": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Players')]",
+							"Games_details": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games_details')]",
+							"folder_origen": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_origen')]",
+							"folder_destino": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 5,
+						"startTime": "2022-12-23T15:00:00",
+						"endTime": "2022-12-28T17:00:00",
+						"timeZone": "Argentina Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Pipeline_Parametrizacion')]",
+				"[concat(variables('factoryId'), '/pipelines/Ejecutar_Pipeline_Parametrizacion')]",
+				"[concat(variables('factoryId'), '/pipelines/Pipeline_ADF-NBA_Executes')]"
+			]
+		}
+	]
+}

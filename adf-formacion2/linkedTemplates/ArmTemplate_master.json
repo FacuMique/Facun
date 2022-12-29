@@ -1,0 +1,251 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-formacion2"
+		},
+		"DB_Formacion_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"DB_Formacion\""
+		},
+		"Formacion3_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"accountKey\"de \"Formacion3\""
+		},
+		"SqlServer1_OnPremise_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"SqlServer1_OnPremise\""
+		},
+		"databricks_formacion_accessToken": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"accessToken\"de \"databricks_formacion\""
+		},
+		"AzureKeyVault_FJM_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keyvaultfjm.vault.azure.net/"
+		},
+		"Formacion3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://formacion3.dfs.core.windows.net/"
+		},
+		"databricks_formacion_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1116-153229-38p0y73u"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_cta_almacenamiento": {
+			"type": "string",
+			"defaultValue": "Pipeline_Parametrizacion"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_origen": {
+			"type": "string",
+			"defaultValue": "Bronze"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino": {
+			"type": "string",
+			"defaultValue": "Silver"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_races": {
+			"type": "string",
+			"defaultValue": "races.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_circuits": {
+			"type": "string",
+			"defaultValue": "circuits.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_r": {
+			"type": "string",
+			"defaultValue": "Races"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_c": {
+			"type": "string",
+			"defaultValue": "Circuits"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_cta_almacenamiento": {
+			"type": "string",
+			"defaultValue": "ADF-NBA"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games": {
+			"type": "string",
+			"defaultValue": "Gsmes"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_teams": {
+			"type": "string",
+			"defaultValue": "Teams"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_ranking": {
+			"type": "string",
+			"defaultValue": "Ranking"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_players": {
+			"type": "string",
+			"defaultValue": "Players"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games_d": {
+			"type": "string",
+			"defaultValue": "Games_Details"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games": {
+			"type": "string",
+			"defaultValue": "games.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Teams": {
+			"type": "string",
+			"defaultValue": "teams.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Ranking": {
+			"type": "string",
+			"defaultValue": "ranking.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Players": {
+			"type": "string",
+			"defaultValue": "players.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games_details": {
+			"type": "string",
+			"defaultValue": "games_details.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_origen": {
+			"type": "string",
+			"defaultValue": "DATASET"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino": {
+			"type": "string",
+			"defaultValue": "BRONZE"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token de SAS para la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-formacion2_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"DB_Formacion_connectionString": {
+						"value": "[parameters('DB_Formacion_connectionString')]"
+					},
+					"Formacion3_accountKey": {
+						"value": "[parameters('Formacion3_accountKey')]"
+					},
+					"SqlServer1_OnPremise_connectionString": {
+						"value": "[parameters('SqlServer1_OnPremise_connectionString')]"
+					},
+					"databricks_formacion_accessToken": {
+						"value": "[parameters('databricks_formacion_accessToken')]"
+					},
+					"AzureKeyVault_FJM_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault_FJM_properties_typeProperties_baseUrl')]"
+					},
+					"Formacion3_properties_typeProperties_url": {
+						"value": "[parameters('Formacion3_properties_typeProperties_url')]"
+					},
+					"databricks_formacion_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('databricks_formacion_properties_typeProperties_existingClusterId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf-formacion2_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_cta_almacenamiento": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_cta_almacenamiento')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_origen": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_origen')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_races": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_races')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_circuits": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_circuits')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_r": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_r')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_c": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_c')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_cta_almacenamiento": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_cta_almacenamiento')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_teams": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_teams')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_ranking": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_ranking')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_players": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_players')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games_d": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games_d')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Teams": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Teams')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Ranking": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Ranking')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Players": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Players')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games_details": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games_details')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_origen": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_origen')]"
+					},
+					"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino": {
+						"value": "[parameters('Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion2_ArmTemplate_0')]"
+			]
+		}
+	]
+}

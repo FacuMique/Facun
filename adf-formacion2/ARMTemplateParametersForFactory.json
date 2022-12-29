@@ -1,0 +1,90 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-formacion2"
+		},
+		"DB_Formacion_connectionString": {
+			"value": ""
+		},
+		"Formacion3_accountKey": {
+			"value": ""
+		},
+		"SqlServer1_OnPremise_connectionString": {
+			"value": ""
+		},
+		"databricks_formacion_accessToken": {
+			"value": ""
+		},
+		"AzureKeyVault_FJM_properties_typeProperties_baseUrl": {
+			"value": "https://keyvaultfjm.vault.azure.net/"
+		},
+		"Formacion3_properties_typeProperties_url": {
+			"value": "https://formacion3.dfs.core.windows.net/"
+		},
+		"databricks_formacion_properties_typeProperties_existingClusterId": {
+			"value": "1116-153229-38p0y73u"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_cta_almacenamiento": {
+			"value": "Pipeline_Parametrizacion"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_origen": {
+			"value": "Bronze"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino": {
+			"value": "Silver"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_races": {
+			"value": "races.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_circuits": {
+			"value": "circuits.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_r": {
+			"value": "Races"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_Parametrizacion_parameters_folder_destino_c": {
+			"value": "Circuits"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_cta_almacenamiento": {
+			"value": "ADF-NBA"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games": {
+			"value": "Gsmes"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_teams": {
+			"value": "Teams"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_ranking": {
+			"value": "Ranking"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_players": {
+			"value": "Players"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino_games_d": {
+			"value": "Games_Details"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games": {
+			"value": "games.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Teams": {
+			"value": "teams.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Ranking": {
+			"value": "ranking.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Players": {
+			"value": "players.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_Games_details": {
+			"value": "games_details.csv"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_origen": {
+			"value": "DATASET"
+		},
+		"Trigger_ADF-NBA_properties_Pipeline_ADF-NBA_Executes_parameters_folder_destino": {
+			"value": "BRONZE"
+		}
+	}
+}
